@@ -20,7 +20,7 @@
   <meta name="theme-color" content="#06121f">
   <meta name="apple-itunes-app" content="app-id=6741874026">
   <link rel="canonical" href="https://mdnsshark.shapehaveninnovations.com/">
-  <link rel="icon" href="assets/icon.png">
+  <link rel="icon" type="image/png" href="assets/icon-rounded.png">
   <link rel="apple-touch-icon" href="assets/icon.png">
   <script type="application/ld+json">
   {
@@ -39,7 +39,7 @@
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
-  <title>mDNSShark: See Everything On Your Network</title>
+  <title>mDNSShark</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -80,7 +80,7 @@
       border-bottom: 1px solid var(--line);
     }
     .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none;
-      color: var(--cyan); font-weight: 800; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; }
+      color: var(--cyan); font-weight: 800; font-size: 16px; letter-spacing: .3px; }
     .nav-brand img { width: 28px; height: 28px; border-radius: 7px; }
     .nav-links { display: flex; align-items: center; gap: 28px; }
     .nav-links a { text-decoration: none; font-size: 14px; color: var(--muted); transition: color .2s; }
@@ -120,13 +120,27 @@
     .meta { margin-top: 18px; font-size: 13px; color: var(--muted); }
 
     .phone {
+      position: relative;
       width: 100%; max-width: 300px; margin: 0 auto;
-      border-radius: 38px; padding: 9px;
-      background: linear-gradient(160deg, #1d3a52, #0a1c2e);
-      border: 1px solid var(--line);
-      box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 60px rgba(34,211,238,.18);
+      border-radius: 46px; padding: 12px;
+      background: linear-gradient(145deg, #3a5a75 0%, #17324a 35%, #0a1c2e 70%, #1b3a54 100%);
+      border: 1px solid rgba(147,197,253,.28);
+      box-shadow:
+        inset 0 0 0 2px #050d16,
+        inset 0 2px 3px rgba(255,255,255,.22),
+        inset 0 -3px 6px rgba(0,0,0,.6),
+        0 2px 0 #12293d,
+        0 5px 0 #0c1f31,
+        0 8px 0 #081827,
+        0 34px 50px -10px rgba(0,0,0,.65),
+        0 0 50px rgba(34,211,238,.14);
     }
-    .phone img { border-radius: 30px; width: 100%; height: auto; }
+    /* side buttons */
+    .phone::before, .phone::after { content: ""; position: absolute; width: 4px; border-radius: 2px;
+      background: linear-gradient(90deg, #0a1c2e, #3a5a75); }
+    .phone::before { left: -4px; top: 18%; height: 7%; box-shadow: 0 52px 0 0 #1b3a54, 0 104px 0 0 #1b3a54; }
+    .phone::after { right: -4px; top: 28%; height: 14%; background: linear-gradient(270deg, #0a1c2e, #3a5a75); }
+    .phone img { border-radius: 34px; width: 100%; height: auto; }
 
     /* ── Sections ── */
     section { padding: 96px 0; }
@@ -146,15 +160,11 @@
     .tag { display: inline-block; margin-top: 14px; font-size: 12px; font-weight: 700; color: var(--cyan); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
 
     /* ── Hero stage ── */
-    .stage { position: relative; perspective: 1100px; display: flex; flex-direction: column; align-items: center; }
+    .stage { position: relative; display: flex; flex-direction: column; align-items: center; }
     .stage .phone {
-      transform: rotateY(var(--ry, -10deg)) rotateX(var(--rx, 4deg));
-      transition: transform .25s ease-out;
       animation: bob 6s ease-in-out infinite;
-      transform-style: preserve-3d;
     }
-    .stage.tilting .phone { animation: none; }
-    @keyframes bob { 0%,100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+    @keyframes bob { 0%,100% { translate: 0 0; } 50% { translate: 0 -6px; } }
     .screens { display: grid; }
     .screens img { grid-area: 1 / 1; opacity: 0; transition: opacity .5s ease; }
     .screens img.on { opacity: 1; }
@@ -457,20 +467,6 @@
       stage.addEventListener('focusin', stop);
       stage.addEventListener('focusout', play);
       setPaused(userPaused);
-      var hero = document.getElementById('hero');
-      if (matchMedia('(hover: hover)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        hero.addEventListener('pointermove', function (e) {
-          var r = hero.getBoundingClientRect();
-          var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-          stage.classList.add('tilting');
-          stage.style.setProperty('--ry', (-x * 24).toFixed(1) + 'deg');
-          stage.style.setProperty('--rx', (y * 14).toFixed(1) + 'deg');
-        });
-        hero.addEventListener('pointerleave', function () {
-          stage.classList.remove('tilting');
-          stage.style.removeProperty('--ry'); stage.style.removeProperty('--rx');
-        });
-      }
     })();
   </script>
 </body>

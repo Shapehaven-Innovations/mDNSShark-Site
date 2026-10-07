@@ -11,6 +11,7 @@
 
 ## Links
 
+- [Full documentation](https://mdnsshark.shapehaveninnovations.com/llms-full.txt): complete README in one file: security checks, TLS Inspection setup, privacy details
 - [Website](https://mdnsshark.shapehaveninnovations.com/): product overview and screenshots
 - [App Store](https://apps.apple.com/app/mdnsshark/id6741874026): download mDNSShark (Network Packet Monitor)
 - [Source code and documentation](https://github.com/Shapehaven-Innovations/mDNSShark): README, issues and contributions
