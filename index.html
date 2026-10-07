@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="mDNSShark is an open-source iPhone app that shows what is on your network: mDNS, DNS-SD and SSDP discovery, security assessment and packet capture. All on-device, no telemetry.">
+  <meta property="og:title" content="mDNSShark: See everything on your network">
+  <meta property="og:description" content="Open-source network discovery, security assessment and packet capture for iPhone. Runs on your phone. No telemetry.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/screen1.png">
+  <link rel="icon" href="assets/icon.png">
+  <title>mDNSShark: See Everything On Your Network</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       #06121f;
+      --bg-alt:   #0a1c2e;
+      --card:     rgba(34,211,238,0.06);
+      --line:     rgba(34,211,238,0.18);
+      --cyan:     #22d3ee;
+      --cyan-dim: #0e7490;
+      --text:     #e6f4fa;
+      --muted:    rgba(230,244,250,0.62);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.55;
+    }
+
+    h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; line-height: 1.15; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Nav ── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 48px;
+      background: rgba(6,18,31,0.72);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none;
+      color: var(--cyan); font-weight: 800; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; }
+    .nav-brand img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { text-decoration: none; font-size: 14px; color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.btn-nav { color: var(--bg); background: var(--cyan); padding: 8px 18px; border-radius: 999px; font-weight: 700; }
+    .nav-links a.btn-nav:hover { color: var(--bg); background: #67e8f9; }
+
+    /* ── Hero ── */
+    #hero {
+      position: relative;
+      min-height: min(100vh, 860px);
+      display: flex; align-items: center;
+      padding: 120px 0 80px;
+      background:
+        linear-gradient(90deg, rgba(6,18,31,0.96) 0%, rgba(6,18,31,0.78) 45%, rgba(6,18,31,0.25) 100%),
+        url('assets/hero.svg') center bottom / cover no-repeat;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+    .eyebrow { color: var(--cyan); font-size: 12px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 18px; }
+    #hero h1 { font-size: clamp(38px, 6vw, 68px); margin-bottom: 20px; }
+    #hero h1 span { color: var(--cyan); }
+    .lede { font-size: clamp(16px, 2vw, 19px); color: var(--muted); max-width: 520px; margin-bottom: 32px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+
+    .btn-store {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #000; color: #fff; text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.55); border-radius: 12px;
+      padding: 9px 20px 9px 16px; transition: transform .2s, border-color .2s;
+    }
+    .btn-store:hover { transform: translateY(-2px); border-color: #fff; }
+    .btn-store svg { width: 26px; height: 26px; fill: #fff; }
+    .btn-store small { display: block; font-size: 11px; line-height: 1.1; opacity: .85; }
+    .btn-store strong { display: block; font-size: 21px; line-height: 1.1; font-weight: 600; letter-spacing: -.3px; }
+    .btn-ghost { text-decoration: none; color: var(--text); border: 1px solid var(--line); border-radius: 12px; padding: 14px 22px; font-size: 15px; font-weight: 600; transition: background .2s; }
+    .btn-ghost:hover { background: var(--card); }
+    .meta { margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+    .phone {
+      width: 100%; max-width: 300px; margin: 0 auto;
+      border-radius: 38px; padding: 9px;
+      background: linear-gradient(160deg, #1d3a52, #0a1c2e);
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 60px rgba(34,211,238,.18);
+    }
+    .phone img { border-radius: 30px; width: 100%; height: auto; }
+
+    /* ── Sections ── */
+    section { padding: 96px 0; }
+    .section-head { text-align: center; margin-bottom: 56px; }
+    .section-head h2 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 14px; }
+    .section-head p { color: var(--muted); max-width: 620px; margin: 0 auto; }
+
+    #features { background: var(--bg-alt); }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 28px 24px; transition: transform .25s, border-color .25s; }
+    .card:hover { transform: translateY(-4px); border-color: rgba(34,211,238,.45); }
+    .card .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 18px;
+      background: rgba(34,211,238,.12); color: var(--cyan); }
+    .card .ico svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .card h3 { font-size: 20px; margin-bottom: 10px; }
+    .card p { font-size: 15px; color: var(--muted); }
+    .tag { display: inline-block; margin-top: 14px; font-size: 12px; font-weight: 700; color: var(--cyan); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
+
+    /* ── Hero stage ── */
+    .stage { position: relative; perspective: 1100px; display: flex; flex-direction: column; align-items: center; }
+    .stage .phone {
+      transform: rotateY(var(--ry, -10deg)) rotateX(var(--rx, 4deg));
+      transition: transform .25s ease-out;
+      animation: bob 6s ease-in-out infinite;
+      transform-style: preserve-3d;
+    }
+    .stage.tilting .phone { animation: none; }
+    @keyframes bob { 0%,100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+    .screens { display: grid; }
+    .screens img { grid-area: 1 / 1; opacity: 0; transition: opacity .5s ease; }
+    .screens img.on { opacity: 1; }
+    .chip {
+      position: absolute; display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(10,28,46,.85); border: 1px solid var(--line); border-radius: 999px;
+      padding: 8px 14px; font-size: 13px; font-weight: 700; white-space: nowrap;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+      animation: bob 5s ease-in-out infinite;
+    }
+    .chip i { width: 9px; height: 9px; border-radius: 50%; }
+    .c1 { top: 12%; left: -6%; animation-delay: -1s; }
+    .c2 { top: 46%; right: -8%; animation-delay: -2.5s; }
+    .c3 { bottom: 24%; left: -10%; animation-delay: -4s; }
+    .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 26px; max-width: 360px; }
+    .tabs button {
+      font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+      color: var(--muted); background: var(--card); border: 1px solid var(--line);
+      border-radius: 999px; padding: 6px 14px; transition: all .2s;
+    }
+    .tabs button:hover { color: var(--text); }
+    .tabs button.on { color: var(--bg); background: var(--cyan); border-color: var(--cyan); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stage .phone, .chip { animation: none; }
+      .screens img { transition: none; }
+    }
+
+    /* ── Privacy ── */
+    #privacy { background: var(--bg-alt); text-align: center; }
+    #privacy h2 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 16px; }
+    #privacy .lede { margin: 0 auto 36px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 32px; }
+    .pill { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 10px 20px; font-size: 14px; font-weight: 600; }
+    .pill b { color: var(--cyan); }
+
+    /* ── Feedback ── */
+    .section-head .eyebrow { color: var(--cyan); margin: 0 auto 16px; max-width: none; }
+    .grid.g3 { grid-template-columns: repeat(3, 1fr); }
+    .card.action { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+    .card.action p { flex: 1; }
+    .go { margin-top: 18px; font-size: 14px; font-weight: 700; color: var(--cyan); transition: letter-spacing .2s; }
+    .card.action:hover .go { letter-spacing: .4px; }
+    .fine { text-align: center; margin-top: 28px; font-size: 13px; color: var(--muted); }
+    .fine a { color: var(--cyan); }
+
+    /* ── Download ── */
+    #download { text-align: center; }
+    #download h2 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 14px; }
+    #download .lede { margin: 0 auto 32px; }
+    #download .cta-row { justify-content: center; }
+    .qr { margin: 36px auto 0; width: 132px; padding: 10px; background: #fff; border-radius: 14px; }
+    .qr-cap { margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+    footer { border-top: 1px solid var(--line); padding: 32px 0; font-size: 13px; color: var(--muted); }
+    .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .foot a { text-decoration: none; margin-left: 18px; }
+    .foot a:hover { color: var(--text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } .grid.g3 { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; } }
+    @media (max-width: 720px) {
+      #nav { padding: 12px 16px; }
+      .nav-links a:not(.btn-nav) { display: none; }
+      #hero { padding-top: 96px; background:
+        linear-gradient(180deg, rgba(6,18,31,0.92) 0%, rgba(6,18,31,0.7) 60%, rgba(6,18,31,0.4) 100%),
+        url('assets/hero.svg') center bottom / cover no-repeat; }
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .lede { margin-left: auto; margin-right: auto; }
+      .cta-row { justify-content: center; }
+      .phone { max-width: 240px; }
+      .grid, .grid.g3 { grid-template-columns: 1fr; }
+      section { padding: 64px 0; }
+      .chip { display: none; }
+      .foot { flex-direction: column; }
+      .foot a { margin: 0 18px 0 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a class="nav-brand" href="#"><img src="assets/icon.png" alt="">mDNSShark</a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="https://github.com/Shapehaven-Innovations/mDNSShark" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn-nav" href="#download">Download</a>
+    </div>
+  </nav>
+
+  <header id="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Network Packet Monitor</p>
+        <h1>See <span>everything</span> on your network.</h1>
+        <p class="lede">mDNSShark finds the printers, TVs, IoT gadgets and services on your Wi-Fi, flags what is risky, and shows you the traffic. Open source, and it all runs on your iPhone.</p>
+        <div class="cta-row">
+          <a class="btn-store" href="https://apps.apple.com/app/mdnsshark/id6741874026" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+            <span><small>Download on the</small><strong>App Store</strong></span>
+          </a>
+          <a class="btn-ghost" href="https://github.com/Shapehaven-Innovations/mDNSShark" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+        <p class="meta">Free · iOS 18.2+ · No telemetry, no trackers</p>
+      </div>
+      <div class="stage" id="stage">
+        <div class="phone" id="phone">
+          <div class="screens">
+            <img class="on" data-tab="0" src="assets/screen1.png" alt="Network topology">
+            <img data-tab="1" src="assets/screen2.png" alt="Discovered devices list">
+            <img data-tab="2" src="assets/screen3.png" alt="Security overview">
+            <img data-tab="3" src="assets/screen5.png" alt="Packet capture">
+            <img data-tab="4" src="assets/screen6.png" alt="Traffic analysis">
+            <img data-tab="5" src="assets/screen7.png" alt="Settings">
+          </div>
+        </div>
+        <span class="chip c1"><i style="background:#9ca3af"></i>48 devices</span>
+        <span class="chip c2"><i style="background:#22c55e"></i>16 secure</span>
+        <span class="chip c3"><i style="background:#ef4444"></i>32 vulnerable</span>
+        <div class="tabs" role="tablist" aria-label="App screens">
+          <button class="on" data-tab="0" role="tab">Topology</button>
+          <button data-tab="1" role="tab">Devices</button>
+          <button data-tab="2" role="tab">Security</button>
+          <button data-tab="3" role="tab">Packets</button>
+          <button data-tab="4" role="tab">Analysis</button>
+          <button data-tab="5" role="tab">Settings</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Know what is on your Wi-Fi</h2>
+        <p>Discovery, assessment and capture in one app, with no setup.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/><path d="M2 9a14 14 0 0 1 20 0"/></svg></div>
+          <h3>Device Discovery</h3>
+          <p>Bonjour/mDNS (DNS-SD) and SSDP find AirPlay receivers, printers, file shares, smart TVs and gateways. Optional /24 scans catch quiet services, and OUI lookups name the manufacturer.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M12 8v5M12 16v.5"/></svg></div>
+          <h3>Security Assessment</h3>
+          <p>Flags risky exposed services and checks each manufacturer against CISA's Known Exploited Vulnerabilities catalog and the NVD. Findings export as a plain-text report.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></div>
+          <h3>Packet Capture</h3>
+          <p>See DNS and SNI as they happen, with a local packet tunnel and no remote server. Export to pcap and open it in Wireshark.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          <h3>TLS Inspection</h3>
+          <p>A local HTTPS proxy that decrypts and logs HTTPS traffic for analysis, with your consent and on your device.</p>
+          <span class="tag">$1.99/month · 3-day free trial</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="wrap">
+      <h2>Your network stays yours</h2>
+      <p class="lede">Scans and analysis run on your phone. Your device list and scan results are never uploaded. The only permission the app needs is local network access.</p>
+      <div class="pills">
+        <span class="pill"><b>0</b> telemetry</span>
+        <span class="pill"><b>0</b> analytics</span>
+        <span class="pill"><b>0</b> trackers</span>
+        <span class="pill"><b>100%</b> open source</span>
+      </div>
+      <a class="btn-ghost" href="https://github.com/Shapehaven-Innovations/mDNSShark" target="_blank" rel="noopener">Read the source</a>
+    </div>
+  </section>
+
+  <section id="feedback">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Open source · Built in the open</p>
+        <h2>Help shape mDNSShark</h2>
+        <p>Your feedback decides what ships next. Feature ideas, bug reports, questions and pull requests are all welcome on GitHub.</p>
+      </div>
+      <div class="grid g3">
+        <a class="card action" href="https://github.com/Shapehaven-Innovations/mDNSShark/issues/new?labels=enhancement&amp;title=Feature%20request%3A%20" target="_blank" rel="noopener">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div>
+          <h3>Request a feature</h3>
+          <p>Missing a protocol, a device type or a report format? Tell us what would make it more useful for you.</p>
+          <span class="go">Open an issue →</span>
+        </a>
+        <a class="card action" href="https://github.com/Shapehaven-Innovations/mDNSShark/issues/new?labels=bug&amp;title=Bug%3A%20" target="_blank" rel="noopener">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M8 9a4 4 0 0 1 8 0v6a4 4 0 0 1-8 0zM3 13h5M16 13h5M4 6l4 3M20 6l-4 3M5 20l3-3M19 20l-3-3M12 9v10"/></svg></div>
+          <h3>Report a bug</h3>
+          <p>Something off in a scan, a finding or a capture? Share your iOS version and steps so we can reproduce it.</p>
+          <span class="go">Report it →</span>
+        </a>
+        <a class="card action" href="https://github.com/Shapehaven-Innovations/mDNSShark" target="_blank" rel="noopener">
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3-11 6.5"/></svg></div>
+          <h3>Contribute code</h3>
+          <p>The whole app is MIT licensed. Read the source, star the repo, fork it, and send a pull request.</p>
+          <span class="go">View on GitHub →</span>
+        </a>
+      </div>
+      <p class="fine">Prefer to browse first? See <a href="https://github.com/Shapehaven-Innovations/mDNSShark/issues" target="_blank" rel="noopener">open issues</a>. A free GitHub account is needed to post.</p>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="wrap">
+      <h2>Find out what is on your network</h2>
+      <p class="lede">Free on the App Store. Scan in seconds.</p>
+      <div class="cta-row">
+        <a class="btn-store" href="https://apps.apple.com/app/mdnsshark/id6741874026" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+          <span><small>Download on the</small><strong>App Store</strong></span>
+        </a>
+      </div>
+      <div class="qr"><img src="assets/qr.png" alt="QR code linking to mDNSShark on the App Store"></div>
+      <p class="qr-cap">Scan with your iPhone</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <span>© ShapeHaven Innovations LLC · MIT licensed</span>
+      <span>
+        <a href="https://github.com/Shapehaven-Innovations/mDNSShark" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/Shapehaven-Innovations/mDNSShark/issues" target="_blank" rel="noopener">Feedback</a>
+        <a href="https://apps.apple.com/app/mdnsshark/id6741874026" target="_blank" rel="noopener">App Store</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var stage = document.getElementById('stage');
+      var imgs = stage.querySelectorAll('.screens img');
+      var btns = stage.querySelectorAll('.tabs button');
+      var cur = 0, timer = null;
+      function show(i) {
+        cur = i;
+        imgs.forEach(function (el, k) { el.classList.toggle('on', k === i); });
+        btns.forEach(function (el, k) { el.classList.toggle('on', k === i); });
+      }
+      function play() {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        stop(); timer = setInterval(function () { show((cur + 1) % imgs.length); }, 3500);
+      }
+      function stop() { if (timer) clearInterval(timer); timer = null; }
+      btns.forEach(function (b, k) { b.addEventListener('click', function () { show(k); play(); }); });
+      stage.addEventListener('pointerenter', stop);
+      stage.addEventListener('pointerleave', play);
+      var hero = document.getElementById('hero');
+      if (matchMedia('(hover: hover)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        hero.addEventListener('pointermove', function (e) {
+          var r = hero.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+          stage.classList.add('tilting');
+          stage.style.setProperty('--ry', (-x * 24).toFixed(1) + 'deg');
+          stage.style.setProperty('--rx', (y * 14).toFixed(1) + 'deg');
+        });
+        hero.addEventListener('pointerleave', function () {
+          stage.classList.remove('tilting');
+          stage.style.removeProperty('--ry'); stage.style.removeProperty('--rx');
+        });
+      }
+      play();
+    })();
+  </script>
+</body>
+</html>
