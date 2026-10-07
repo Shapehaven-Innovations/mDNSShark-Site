@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mdnsshark.shapehaveninnovations.com/sitemap.xml
