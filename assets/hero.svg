@@ -51,7 +51,8 @@
 
   <!-- fin -->
   <g filter="url(#glow)">
-    <path d="M520 525 C585 495 640 390 690 250 C690 390 735 480 815 525 C760 510 705 508 665 520 C615 508 565 512 520 525 Z" fill="url(#fin)"/>
+    <path d="M535 526 C568 480 612 360 722 226 C700 300 696 400 708 452 C722 492 764 512 812 526 C760 514 712 512 668 520 C618 512 572 514 535 526 Z" fill="url(#fin)"/>
+    <path d="M556 508 C598 440 640 350 716 246" fill="none" stroke="#ecfeff" stroke-opacity=".55" stroke-width="2.5" stroke-linecap="round"/>
   </g>
   <!-- wake rings -->
   <ellipse cx="660" cy="528" rx="190" ry="14" fill="none" stroke="#22d3ee" stroke-opacity=".5"/>

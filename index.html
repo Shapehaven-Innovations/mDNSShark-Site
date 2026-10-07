@@ -8,8 +8,37 @@
   <meta property="og:title" content="mDNSShark: See everything on your network">
   <meta property="og:description" content="Open-source network discovery, security assessment and packet capture for iPhone. Runs on your phone. No telemetry.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/screen1.png">
+  <meta property="og:url" content="https://mdnsshark.shapehaveninnovations.com/">
+  <meta property="og:image" content="https://mdnsshark.shapehaveninnovations.com/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="mDNSShark: See everything on your network, with a shark fin over a glowing network graph">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="mDNSShark: See everything on your network">
+  <meta name="twitter:description" content="Open-source network discovery, security assessment and packet capture for iPhone. Runs on your phone. No telemetry.">
+  <meta name="twitter:image" content="https://mdnsshark.shapehaveninnovations.com/assets/og.png">
+  <meta name="theme-color" content="#06121f">
+  <meta name="apple-itunes-app" content="app-id=6741874026">
+  <link rel="canonical" href="https://mdnsshark.shapehaveninnovations.com/">
   <link rel="icon" href="assets/icon.png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "mDNSShark",
+    "alternateName": "mDNSShark - Network Packet Monitor",
+    "operatingSystem": "iOS 18.2",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "Open-source iPhone app for local network discovery (mDNS, DNS-SD, SSDP), security assessment and packet capture.",
+    "url": "https://mdnsshark.shapehaveninnovations.com/",
+    "downloadUrl": "https://apps.apple.com/app/mdnsshark/id6741874026",
+    "image": "https://mdnsshark.shapehaveninnovations.com/assets/icon.png",
+    "sameAs": ["https://github.com/Shapehaven-Innovations/mDNSShark"],
+    "author": { "@type": "Organization", "name": "ShapeHaven Innovations LLC" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
   <title>mDNSShark: See Everything On Your Network</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -150,9 +179,19 @@
     .tabs button:hover { color: var(--text); }
     .tabs button.on { color: var(--bg); background: var(--cyan); border-color: var(--cyan); }
 
+    .pause { margin-top: 12px; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--muted);
+      background: none; border: 0; padding: 4px 10px; border-radius: 999px; }
+    .pause:hover { color: var(--text); }
+
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
     @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
       .stage .phone, .chip { animation: none; }
       .screens img { transition: none; }
+      .card, .btn-store, .go { transition: none; }
+      .card:hover { transform: none; }
+      .btn-store:hover { transform: none; }
     }
 
     /* ── Privacy ── */
@@ -179,6 +218,7 @@
     #download .lede { margin: 0 auto 32px; }
     #download .cta-row { justify-content: center; }
     .qr { margin: 36px auto 0; width: 132px; padding: 10px; background: #fff; border-radius: 14px; }
+    .qr img { width: 100%; height: auto; image-rendering: pixelated; }
     .qr-cap { margin-top: 10px; font-size: 13px; color: var(--muted); }
 
     footer { border-top: 1px solid var(--line); padding: 32px 0; font-size: 13px; color: var(--muted); }
@@ -218,7 +258,8 @@
     </div>
   </nav>
 
-  <header id="hero">
+  <main>
+  <section id="hero">
     <div class="wrap hero-grid">
       <div>
         <p class="eyebrow">Network Packet Monitor</p>
@@ -231,33 +272,34 @@
           </a>
           <a class="btn-ghost" href="https://github.com/Shapehaven-Innovations/mDNSShark" target="_blank" rel="noopener">View on GitHub</a>
         </div>
-        <p class="meta">Free · iOS 18.2+ · No telemetry, no trackers</p>
+        <p class="meta">Free to download · iOS 18.2+ · No telemetry, no trackers<br>Optional TLS Inspection: $1.99/month, 3-day free trial</p>
       </div>
       <div class="stage" id="stage">
         <div class="phone" id="phone">
-          <div class="screens">
-            <img class="on" data-tab="0" src="assets/screen1.png" alt="Network topology">
-            <img data-tab="1" src="assets/screen2.png" alt="Discovered devices list">
-            <img data-tab="2" src="assets/screen3.png" alt="Security overview">
-            <img data-tab="3" src="assets/screen5.png" alt="Packet capture">
-            <img data-tab="4" src="assets/screen6.png" alt="Traffic analysis">
-            <img data-tab="5" src="assets/screen7.png" alt="Settings">
+          <div class="screens" id="screens-panel" role="tabpanel" aria-labelledby="tab-0">
+            <img class="on" fetchpriority="high" data-tab="0" src="assets/screen1.webp" width="600" height="1300" alt="Network topology">
+            <img aria-hidden="true" decoding="async" data-tab="1" src="assets/screen2.webp" width="600" height="1300" alt="Discovered devices list">
+            <img aria-hidden="true" decoding="async" data-tab="2" src="assets/screen3.webp" width="600" height="1300" alt="Security overview">
+            <img aria-hidden="true" decoding="async" data-tab="3" src="assets/screen5.webp" width="600" height="1300" alt="Packet capture">
+            <img aria-hidden="true" decoding="async" data-tab="4" src="assets/screen6.webp" width="600" height="1300" alt="Traffic analysis">
+            <img aria-hidden="true" decoding="async" data-tab="5" src="assets/screen7.webp" width="600" height="1300" alt="Settings">
           </div>
         </div>
         <span class="chip c1"><i style="background:#9ca3af"></i>48 devices</span>
         <span class="chip c2"><i style="background:#22c55e"></i>16 secure</span>
         <span class="chip c3"><i style="background:#ef4444"></i>32 vulnerable</span>
         <div class="tabs" role="tablist" aria-label="App screens">
-          <button class="on" data-tab="0" role="tab">Topology</button>
-          <button data-tab="1" role="tab">Devices</button>
-          <button data-tab="2" role="tab">Security</button>
-          <button data-tab="3" role="tab">Packets</button>
-          <button data-tab="4" role="tab">Analysis</button>
-          <button data-tab="5" role="tab">Settings</button>
+          <button id="tab-0" class="on" data-tab="0" role="tab" aria-selected="true" aria-controls="screens-panel" tabindex="0">Topology</button>
+          <button id="tab-1" data-tab="1" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Devices</button>
+          <button id="tab-2" data-tab="2" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Security</button>
+          <button id="tab-3" data-tab="3" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Packets</button>
+          <button id="tab-4" data-tab="4" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Analysis</button>
+          <button id="tab-5" data-tab="5" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Settings</button>
         </div>
+        <button class="pause" id="pause" type="button" aria-label="Pause screen auto-play">Pause</button>
       </div>
     </div>
-  </header>
+  </section>
 
   <section id="features">
     <div class="wrap">
@@ -339,17 +381,18 @@
   <section id="download">
     <div class="wrap">
       <h2>Find out what is on your network</h2>
-      <p class="lede">Free on the App Store. Scan in seconds.</p>
+      <p class="lede">Free to download on the App Store. Scan in seconds.</p>
       <div class="cta-row">
         <a class="btn-store" href="https://apps.apple.com/app/mdnsshark/id6741874026" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
           <span><small>Download on the</small><strong>App Store</strong></span>
         </a>
       </div>
-      <div class="qr"><img src="assets/qr.png" alt="QR code linking to mDNSShark on the App Store"></div>
+      <div class="qr"><img src="assets/qr.png" width="444" height="444" alt="QR code linking to mDNSShark on the App Store"></div>
       <p class="qr-cap">Scan with your iPhone</p>
     </div>
   </section>
+  </main>
 
   <footer>
     <div class="wrap foot">
@@ -367,20 +410,53 @@
       var stage = document.getElementById('stage');
       var imgs = stage.querySelectorAll('.screens img');
       var btns = stage.querySelectorAll('.tabs button');
-      var cur = 0, timer = null;
+      var pauseBtn = document.getElementById('pause');
+      var panel = document.getElementById('screens-panel');
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var cur = 0, timer = null, userPaused = reduce;
       function show(i) {
         cur = i;
-        imgs.forEach(function (el, k) { el.classList.toggle('on', k === i); });
-        btns.forEach(function (el, k) { el.classList.toggle('on', k === i); });
-      }
-      function play() {
-        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        stop(); timer = setInterval(function () { show((cur + 1) % imgs.length); }, 3500);
+        imgs.forEach(function (el, k) {
+          el.classList.toggle('on', k === i);
+          if (k === i) el.removeAttribute('aria-hidden'); else el.setAttribute('aria-hidden', 'true');
+        });
+        btns.forEach(function (el, k) {
+          el.classList.toggle('on', k === i);
+          el.setAttribute('aria-selected', k === i ? 'true' : 'false');
+          el.tabIndex = k === i ? 0 : -1;
+        });
+        panel.setAttribute('aria-labelledby', 'tab-' + i);
       }
       function stop() { if (timer) clearInterval(timer); timer = null; }
-      btns.forEach(function (b, k) { b.addEventListener('click', function () { show(k); play(); }); });
+      function play() {
+        stop();
+        if (userPaused) return;
+        timer = setInterval(function () { show((cur + 1) % imgs.length); }, 3500);
+      }
+      function setPaused(v) {
+        userPaused = v;
+        pauseBtn.textContent = v ? 'Play' : 'Pause';
+        pauseBtn.setAttribute('aria-label', v ? 'Play screen auto-play' : 'Pause screen auto-play');
+        play();
+      }
+      btns.forEach(function (b, k) {
+        b.addEventListener('click', function () { show(k); setPaused(true); });
+        b.addEventListener('keydown', function (e) {
+          var n = null;
+          if (e.key === 'ArrowRight') n = (k + 1) % btns.length;
+          else if (e.key === 'ArrowLeft') n = (k - 1 + btns.length) % btns.length;
+          else if (e.key === 'Home') n = 0;
+          else if (e.key === 'End') n = btns.length - 1;
+          if (n === null) return;
+          e.preventDefault(); show(n); btns[n].focus(); setPaused(true);
+        });
+      });
+      pauseBtn.addEventListener('click', function () { setPaused(!userPaused); });
       stage.addEventListener('pointerenter', stop);
-      stage.addEventListener('pointerleave', play);
+      stage.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') play(); });
+      stage.addEventListener('focusin', stop);
+      stage.addEventListener('focusout', play);
+      setPaused(userPaused);
       var hero = document.getElementById('hero');
       if (matchMedia('(hover: hover)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
         hero.addEventListener('pointermove', function (e) {
@@ -395,7 +471,6 @@
           stage.style.removeProperty('--ry'); stage.style.removeProperty('--rx');
         });
       }
-      play();
     })();
   </script>
 </body>
