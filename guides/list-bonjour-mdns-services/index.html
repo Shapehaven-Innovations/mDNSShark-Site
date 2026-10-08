@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List Every Bonjour (mDNS) Service on Your Network</title>
+  <meta name="description" content="How to see every service your devices advertise over Bonjour/mDNS: the _services._dns-sd._udp query, dns-sd on a Mac, avahi-browse on Linux, and an iPhone app.">
+  <link rel="canonical" href="https://mdnsshark.shapehaveninnovations.com/guides/list-bonjour-mdns-services/">
+  <link rel="icon" href="/assets/icon-rounded.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="mDNSShark">
+  <meta property="og:title" content="List Every Bonjour (mDNS) Service on Your Network">
+  <meta property="og:description" content="How to see every service your devices advertise over Bonjour/mDNS: the _services._dns-sd._udp query, dns-sd on a Mac, avahi-browse on Linux, and an iPhone app.">
+  <meta property="og:url" content="https://mdnsshark.shapehaveninnovations.com/guides/list-bonjour-mdns-services/">
+  <meta property="og:image" content="https://mdnsshark.shapehaveninnovations.com/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="List Every Bonjour (mDNS) Service on Your Network">
+  <meta name="twitter:description" content="How to see every service your devices advertise over Bonjour/mDNS: the _services._dns-sd._udp query, dns-sd on a Mac, avahi-browse on Linux, and an iPhone app.">
+  <meta name="twitter:image" content="https://mdnsshark.shapehaveninnovations.com/assets/og.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to List Every Bonjour (mDNS) Service on Your Network",
+  "description": "How to see every service your devices advertise over Bonjour/mDNS: the _services._dns-sd._udp query, dns-sd on a Mac, avahi-browse on Linux, and an iPhone app.",
+  "datePublished": "2026-10-08",
+  "dateModified": "2026-10-08",
+  "mainEntityOfPage": "https://mdnsshark.shapehaveninnovations.com/guides/list-bonjour-mdns-services/",
+  "image": "https://mdnsshark.shapehaveninnovations.com/assets/og.png",
+  "author": {
+    "@type": "Organization",
+    "name": "ShapeHaven Innovations",
+    "url": "https://shapehaveninnovations.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ShapeHaven Innovations",
+    "url": "https://shapehaveninnovations.com/"
+  }
+}
+  </script>
+  <style>
+    :root { --bg:#06121f; --text:#e6f4fa; --muted:rgba(230,244,250,0.62); --line:rgba(34,211,238,0.18); --card:rgba(34,211,238,0.06); --code:rgba(34,211,238,0.10); --bar:#0a1c2e; --link:#22d3ee; --accent:#22d3ee; --accent-ink:#06121f; }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    a { color: var(--link); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+    .top { border-bottom: 1px solid var(--line); background: var(--bar); }
+    .bar { display: flex; align-items: center; justify-content: space-between; min-height: 60px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; }
+    .brand img { border-radius: 7px; }
+    .cta-small { font-size: .9rem; font-weight: 600; text-decoration: none; background: var(--accent); color: var(--accent-ink); padding: 8px 14px; border-radius: 999px; }
+    main { padding-top: 28px; padding-bottom: 56px; }
+    .crumb { font-size: .85rem; color: var(--muted); margin: 0 0 6px; }
+    .crumb a { color: var(--muted); }
+    h1 { font-size: clamp(1.7rem, 4.2vw, 2.4rem); line-height: 1.2; margin: .2em 0 .3em; }
+    h2 { font-size: 1.35rem; line-height: 1.3; margin: 2em 0 .5em; }
+    h3 { font-size: 1.1rem; margin: 1.5em 0 .4em; }
+    p, li { font-size: 1.04rem; }
+    .meta { color: var(--muted); font-size: .9rem; margin-top: 0; }
+    .lead { font-size: 1.15rem; padding: 14px 18px; border-left: 4px solid var(--accent); background: var(--card); border-radius: 0 10px 10px 0; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92rem; }
+    code { background: var(--code); padding: 2px 6px; border-radius: 5px; }
+    pre { background: var(--code); padding: 14px 16px; border-radius: 10px; overflow-x: auto; line-height: 1.5; }
+    pre code { background: none; padding: 0; }
+    .table-wrap { overflow-x: auto; margin: 1em 0; }
+    table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+    th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--card); }
+    .note { font-size: .92rem; color: var(--muted); }
+    .callout { background: var(--card); border: 1px solid var(--line); padding: 14px 18px; border-radius: 10px; }
+    .cta-box { margin-top: 2.5em; padding: 22px 24px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+    .cta-box h2 { margin-top: 0; }
+    .btn { display: inline-block; background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; padding: 12px 20px; border-radius: 999px; }
+    .foot { border-top: 1px solid var(--line); padding: 26px 0 40px; font-size: .9rem; color: var(--muted); }
+    .foot a { color: var(--muted); margin-right: 14px; }
+    @media (max-width: 520px) { .cta-small { display: none; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="/"><img src="/assets/icon.png" alt="" width="28" height="28">mDNSShark</a>
+      <a class="cta-small" href="https://apps.apple.com/app/mdnsshark/id6741874026">Download on the App Store</a>
+    </div>
+  </header>
+  <main class="wrap">
+    <article>
+      <p class="crumb"><a href="/">mDNSShark</a> &rsaquo; Guides</p>
+      <h1>How to list every Bonjour (mDNS) service on your network</h1>
+      <p class="meta">Last updated October 8, 2026</p>
+      <p class="lead">Ask the network for the special name <code>_services._dns-sd._udp.local.</code>. Devices answer with the <em>types</em> of service they advertise. On a Mac that is one command: <code>dns-sd -B _services._dns-sd._udp local</code>.</p>
+
+      <h2>What Bonjour and mDNS are</h2>
+      <p>Multicast DNS (mDNS, <a href="https://www.rfc-editor.org/rfc/rfc6762">RFC 6762</a>) and DNS-based Service Discovery (DNS-SD, <a href="https://www.rfc-editor.org/rfc/rfc6763">RFC 6763</a>) let devices announce themselves on the local network without a central server. This is how a printer, an AirPlay receiver or a file share shows up on your devices without you typing an address. Apple's name for the combination is Bonjour.</p>
+      <p>Because these queries are link-local, they normally stay on one network segment. That matters when you are troubleshooting, and it is why a device on a different Wi-Fi network or VLAN often does not show up.</p>
+      <p class="note">Only scan networks you own or have permission to examine.</p>
+
+      <h2>On a Mac: list service types with dns-sd</h2>
+      <p>Open Terminal and run:</p>
+      <pre><code>dns-sd -B _services._dns-sd._udp local</code></pre>
+      <p>You will see a table that fills in as devices answer. Here is a shortened example of the output format:</p>
+      <pre><code>Timestamp     A/R    Flags  if Domain  Service Type   Instance Name
+14:20:42.668  Add        3   5 .       _tcp.local.    _airplay
+14:20:42.668  Add        3   5 .       _tcp.local.    _raop
+14:20:42.668  Add        3   5 .       _tcp.local.    _companion-link</code></pre>
+      <p>Notice that the service type is split across two columns. Combine the <strong>Instance Name</strong> column with the <strong>Service Type</strong> column to read it: <code>_airplay</code> plus <code>_tcp.local.</code> means <code>_airplay._tcp</code>. Press Control-C to stop.</p>
+
+      <h2>Then browse each type</h2>
+      <p>The meta-query tells you which types exist. To see the actual devices offering one, browse that type:</p>
+      <pre><code>dns-sd -B _airplay._tcp local</code></pre>
+      <p>And to resolve one instance to a host and port, use <code>dns-sd -L "&lt;Name&gt;" &lt;Type&gt; local</code>, taking the name from the browse output.</p>
+
+      <h2>On Linux: avahi-browse</h2>
+      <p>If the Avahi tools are installed, <code>avahi-browse -a -t</code> lists all services it can find and then exits (see the <code>avahi-browse</code> manual page for the options on your version).</p>
+
+      <h2>A caveat: the list can be stale</h2>
+      <p>Apple's technical note <a href="https://developer.apple.com/library/archive/qa/qa1337/_index.html">QA1337</a> explains that this meta-query behaves differently from a normal mDNS query: it is not told about REMOVE events when a service stops being advertised. So a service type can linger in your list after the device that offered it has gone. If something looks wrong, stop and run the query again. The note dates from 2004 and is no longer updated, but the behavior it describes follows from how the meta-query is defined.</p>
+
+      <h2>On an iPhone</h2>
+      <p>There is no terminal on an iPhone, so you need an app. mDNSShark uses Bonjour/mDNS (DNS-SD) and SSDP to find things like AirPlay receivers, printers, file shares, smart TVs and gateways, and it can run an optional scan to catch quiet services. It is open source under the MIT license, runs on your phone, and the only permission it asks for is local network access.</p>
+
+      <h2>If nothing shows up</h2>
+      <ul>
+        <li>Make sure the device you are scanning from and the device you expect are on the <strong>same network</strong>. Guest networks and separate VLANs usually isolate multicast traffic.</li>
+        <li>Check whether the device really advertises over Bonjour. Not everything does.</li>
+        <li>Wait a few seconds and run the query again; devices answer on their own schedule.</li>
+        <li>On iPhone, confirm the app has local network access in Settings.</li>
+      </ul>
+      <aside class="cta-box">
+        <h2>Check your own network from your iPhone</h2>
+        <p>mDNSShark finds the printers, TVs and services on your Wi-Fi using Bonjour/mDNS (DNS-SD) and SSDP. It is free to download, open source and runs on your iPhone.</p>
+        <p><a class="btn" href="https://apps.apple.com/app/mdnsshark/id6741874026">Download on the App Store</a></p>
+      </aside>
+    </article>
+  </main>
+  <footer class="foot">
+    <div class="wrap"><a href="https://github.com/Shapehaven-Innovations/mDNSShark" rel="noopener">GitHub</a><a href="https://github.com/Shapehaven-Innovations/mDNSShark/issues" rel="noopener">Feedback</a><a href="https://apps.apple.com/app/mdnsshark/id6741874026" rel="noopener">App Store</a><br>&copy; ShapeHaven Innovations LLC &middot; MIT licensed</div>
+  </footer>
+</body>
+</html>
