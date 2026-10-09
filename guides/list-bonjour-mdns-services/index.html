@@ -24,7 +24,7 @@
   "headline": "How to List Every Bonjour (mDNS) Service on Your Network",
   "description": "How to see every service your devices advertise over Bonjour/mDNS: the _services._dns-sd._udp query, dns-sd on a Mac, avahi-browse on Linux, and an iPhone app.",
   "datePublished": "2026-10-08",
-  "dateModified": "2026-10-08",
+  "dateModified": "2026-10-09",
   "mainEntityOfPage": "https://mdnsshark.shapehaveninnovations.com/guides/list-bonjour-mdns-services/",
   "image": "https://mdnsshark.shapehaveninnovations.com/assets/og.png",
   "author": {
@@ -89,7 +89,7 @@
     <article>
       <p class="crumb"><a href="/">mDNSShark</a> &rsaquo; Guides</p>
       <h1>How to list every Bonjour (mDNS) service on your network</h1>
-      <p class="meta">Last updated October 8, 2026</p>
+      <p class="meta">Last updated October 9, 2026</p>
       <p class="lead">Ask the network for the special name <code>_services._dns-sd._udp.local.</code>. Devices answer with the <em>types</em> of service they advertise. On a Mac that is one command: <code>dns-sd -B _services._dns-sd._udp local</code>.</p>
 
       <h2>What Bonjour and mDNS are</h2>
@@ -119,7 +119,7 @@
       <p>Apple's technical note <a href="https://developer.apple.com/library/archive/qa/qa1337/_index.html">QA1337</a> explains that this meta-query behaves differently from a normal mDNS query: it is not told about REMOVE events when a service stops being advertised. So a service type can linger in your list after the device that offered it has gone. If something looks wrong, stop and run the query again. The note dates from 2004 and is no longer updated, but the behavior it describes follows from how the meta-query is defined.</p>
 
       <h2>On an iPhone</h2>
-      <p>There is no terminal on an iPhone, so you need an app. mDNSShark uses Bonjour/mDNS (DNS-SD) and SSDP to find things like AirPlay receivers, printers, file shares, smart TVs and gateways, and it can run an optional scan to catch quiet services. It is open source under the MIT license, runs on your phone, and the only permission it asks for is local network access.</p>
+      <p>There is no terminal on an iPhone, so you need an app. mDNSShark uses Bonjour/mDNS (DNS-SD) and SSDP to find things like AirPlay receivers, printers, file shares, smart TVs and gateways, and each scan also sweeps your local /24 subnet over TCP port 80 to catch devices that stay quiet on Bonjour. It is open source under the MIT license and runs on your phone. It asks for local network access; the optional packet capture feature additionally asks you to allow a VPN configuration, and TLS Inspection is a paid subscription.</p>
 
       <h2>If nothing shows up</h2>
       <ul>
@@ -130,7 +130,7 @@
       </ul>
       <aside class="cta-box">
         <h2>Check your own network from your iPhone</h2>
-        <p>mDNSShark finds the printers, TVs and services on your Wi-Fi using Bonjour/mDNS (DNS-SD) and SSDP. It is free to download, open source and runs on your iPhone.</p>
+        <p>mDNSShark finds the printers, TVs and services on your Wi-Fi using Bonjour/mDNS (DNS-SD) and SSDP. Scanning is free, and the app is open source and runs on your iPhone.</p>
         <p><a class="btn" href="https://apps.apple.com/app/mdnsshark/id6741874026">Download on the App Store</a></p>
       </aside>
     </article>
