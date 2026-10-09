@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bonjour / mDNS Service Types Reference (IANA-Sourced)</title>
+  <meta name="description" content="Scannable table of common Bonjour/mDNS service types such as _http._tcp, _ipp._tcp, _ssh._tcp and _airplay._tcp, with default ports from the IANA service-name registry.">
+  <link rel="canonical" href="https://mdnsshark.shapehaveninnovations.com/guides/bonjour-mdns-service-types-reference/">
+  <link rel="icon" href="/assets/icon-rounded.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="mDNSShark">
+  <meta property="og:title" content="Bonjour / mDNS Service Types Reference (IANA-Sourced)">
+  <meta property="og:description" content="Scannable table of common Bonjour/mDNS service types such as _http._tcp, _ipp._tcp, _ssh._tcp and _airplay._tcp, with default ports from the IANA service-name registry.">
+  <meta property="og:url" content="https://mdnsshark.shapehaveninnovations.com/guides/bonjour-mdns-service-types-reference/">
+  <meta property="og:image" content="https://mdnsshark.shapehaveninnovations.com/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bonjour / mDNS Service Types Reference (IANA-Sourced)">
+  <meta name="twitter:description" content="Scannable table of common Bonjour/mDNS service types such as _http._tcp, _ipp._tcp, _ssh._tcp and _airplay._tcp, with default ports from the IANA service-name registry.">
+  <meta name="twitter:image" content="https://mdnsshark.shapehaveninnovations.com/assets/og.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Bonjour / mDNS Service Types Reference",
+  "description": "Scannable table of common Bonjour/mDNS service types such as _http._tcp, _ipp._tcp, _ssh._tcp and _airplay._tcp, with default ports from the IANA service-name registry.",
+  "datePublished": "2026-10-09",
+  "dateModified": "2026-10-09",
+  "mainEntityOfPage": "https://mdnsshark.shapehaveninnovations.com/guides/bonjour-mdns-service-types-reference/",
+  "image": "https://mdnsshark.shapehaveninnovations.com/assets/og.png",
+  "author": {
+    "@type": "Organization",
+    "name": "ShapeHaven Innovations",
+    "url": "https://shapehaveninnovations.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ShapeHaven Innovations",
+    "url": "https://shapehaveninnovations.com/"
+  }
+}
+  </script>
+  <style>
+    :root { --bg:#06121f; --text:#e6f4fa; --muted:rgba(230,244,250,0.62); --line:rgba(34,211,238,0.18); --card:rgba(34,211,238,0.06); --code:rgba(34,211,238,0.10); --bar:#0a1c2e; --link:#22d3ee; --accent:#22d3ee; --accent-ink:#06121f; }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    a { color: var(--link); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+    .top { border-bottom: 1px solid var(--line); background: var(--bar); }
+    .bar { display: flex; align-items: center; justify-content: space-between; min-height: 60px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; }
+    .brand img { border-radius: 7px; }
+    .cta-small { font-size: .9rem; font-weight: 600; text-decoration: none; background: var(--accent); color: var(--accent-ink); padding: 8px 14px; border-radius: 999px; }
+    main { padding-top: 28px; padding-bottom: 56px; }
+    .crumb { font-size: .85rem; color: var(--muted); margin: 0 0 6px; }
+    .crumb a { color: var(--muted); }
+    h1 { font-size: clamp(1.7rem, 4.2vw, 2.4rem); line-height: 1.2; margin: .2em 0 .3em; }
+    h2 { font-size: 1.35rem; line-height: 1.3; margin: 2em 0 .5em; }
+    h3 { font-size: 1.1rem; margin: 1.5em 0 .4em; }
+    p, li { font-size: 1.04rem; }
+    .meta { color: var(--muted); font-size: .9rem; margin-top: 0; }
+    .lead { font-size: 1.15rem; padding: 14px 18px; border-left: 4px solid var(--accent); background: var(--card); border-radius: 0 10px 10px 0; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92rem; }
+    code { background: var(--code); padding: 2px 6px; border-radius: 5px; }
+    pre { background: var(--code); padding: 14px 16px; border-radius: 10px; overflow-x: auto; line-height: 1.5; }
+    pre code { background: none; padding: 0; }
+    .table-wrap { overflow-x: auto; margin: 1em 0; }
+    table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+    th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--card); }
+    .note { font-size: .92rem; color: var(--muted); }
+    .callout { background: var(--card); border: 1px solid var(--line); padding: 14px 18px; border-radius: 10px; }
+    .cta-box { margin-top: 2.5em; padding: 22px 24px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+    .cta-box h2 { margin-top: 0; }
+    .btn { display: inline-block; background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; padding: 12px 20px; border-radius: 999px; }
+    .foot { border-top: 1px solid var(--line); padding: 26px 0 40px; font-size: .9rem; color: var(--muted); }
+    .foot a { color: var(--muted); margin-right: 14px; }
+    td code { white-space: nowrap; }
+    .src { white-space: nowrap; }
+    @media (max-width: 520px) { .cta-small { display: none; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="/"><img src="/assets/icon.png" alt="" width="28" height="28">mDNSShark</a>
+      <a class="cta-small" href="https://apps.apple.com/app/mdnsshark/id6741874026">Download on the App Store</a>
+    </div>
+  </header>
+  <main class="wrap">
+    <article>
+      <p class="crumb"><a href="/">mDNSShark</a> &rsaquo; Guides</p>
+      <h1>Bonjour / mDNS service types reference</h1>
+      <p class="meta">Last checked October 9, 2026</p>
+      <p class="lead">A Bonjour service type is a name like <code>_ipp._tcp</code>: a service name, then the transport protocol. Devices advertise these over mDNS (<a href="https://www.rfc-editor.org/rfc/rfc6763">RFC 6763</a>) so other devices can find them. Below are common types, with ports from the IANA service-name registry.</p>
+
+      <h2>Common service types</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Service type</th><th>What it is</th><th>Typical devices</th><th>Default port</th><th>Source</th></tr></thead>
+          <tbody>
+          <tr><td><code>_http._tcp</code></td><td>World Wide Web HTTP. Used to advertise a web page or web interface.</td><td>Routers, NAS boxes, printers (admin pages), IoT gadgets</td><td><code>80</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=http" rel="noopener">IANA: http</a></td></tr>
+          <tr><td><code>_ssh._tcp</code></td><td>The Secure Shell (SSH) protocol.</td><td>Macs and Linux machines with remote login on, Raspberry Pi, NAS boxes</td><td><code>22</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=ssh" rel="noopener">IANA: ssh</a></td></tr>
+          <tr><td><code>_ftp._tcp</code></td><td>File Transfer Protocol (control connection).</td><td>NAS boxes, older network storage</td><td><code>21</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=ftp" rel="noopener">IANA: ftp</a></td></tr>
+          <tr><td><code>_ipp._tcp</code></td><td>Internet Printing Protocol.</td><td>Network printers, print servers</td><td><code>631</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=ipp" rel="noopener">IANA: ipp</a></td></tr>
+          <tr><td><code>_ipps._tcp</code></td><td>Internet Printing Protocol over HTTPS.</td><td>Network printers, print servers</td><td><code>631</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=ipps" rel="noopener">IANA: ipps</a></td></tr>
+          <tr><td><code>_printer._tcp</code></td><td>Line printer spooler (LPD).</td><td>Network printers, print servers</td><td><code>515</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=printer" rel="noopener">IANA: printer</a></td></tr>
+          <tr><td><code>_pdl-datastream._tcp</code></td><td>Printer PDL data stream (raw printing).</td><td>Network printers</td><td><code>9100</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=pdl-datastream" rel="noopener">IANA: pdl-datastream</a></td></tr>
+          <tr><td><code>_afpovertcp._tcp</code></td><td>Apple Filing Protocol (AFP) over TCP.</td><td>Macs with file sharing, NAS boxes, Time Capsule-style storage</td><td><code>548</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=afpovertcp" rel="noopener">IANA: afpovertcp</a></td></tr>
+          <tr><td><code>_nfs._tcp</code></td><td>Network File System.</td><td>Linux and Unix servers, NAS boxes</td><td><code>2049</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=nfs" rel="noopener">IANA: nfs</a></td></tr>
+          <tr><td><code>_daap._tcp</code></td><td>Digital Audio Access Protocol, used for iTunes library sharing.</td><td>Computers sharing a music library</td><td><code>3689</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=daap" rel="noopener">IANA: daap</a></td></tr>
+          <tr><td><code>_rfb._tcp</code></td><td>Remote Framebuffer, the protocol behind VNC screen sharing.</td><td>Macs with screen sharing, Linux desktops</td><td><code>5900</code></td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=rfb" rel="noopener">IANA: rfb</a></td></tr>
+          <tr><td><code>_airplay._tcp</code></td><td>Protocol for streaming audio and video content.</td><td>Apple TV, AirPlay-capable TVs and speakers</td><td>not defined</td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=airplay" rel="noopener">IANA: airplay</a></td></tr>
+          <tr><td><code>_homekit._tcp</code></td><td>Protocol for home hub communication.</td><td>Home hubs and HomeKit accessories</td><td>not defined</td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=homekit" rel="noopener">IANA: homekit</a></td></tr>
+          <tr><td><code>_googlecast._tcp</code></td><td>Service related to Google Cast, a technology for multi-screen experiences.</td><td>Chromecast devices, Cast-enabled TVs and speakers</td><td>not defined</td><td class="src"><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=googlecast" rel="noopener">IANA: googlecast</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">"Not defined" means the IANA registry lists the service name but assigns no port number. For those types the port comes from each device's SRV record, so read it from a resolve rather than assuming one. Where a registry entry has a port, a device can still advertise a different one in its SRV record.</p>
+
+      <h2>How to browse these with mDNSShark</h2>
+      <p>On an iPhone, run a scan in mDNSShark and look for these service types among the results. mDNSShark discovers services over Bonjour/mDNS (DNS-SD) and SSDP, so a printer shows up under its printing types and a Mac with remote login on shows up as <code>_ssh._tcp</code>. To list every type on the network from a Mac or Linux machine instead, see <a href="/guides/list-bonjour-mdns-services/">How to list every Bonjour (mDNS) service on your network</a>. Once you know a type, you can browse it directly, for example <code>dns-sd -B _ipp._tcp local</code>.</p>
+      <p class="note">Only scan networks you own or have permission to examine.</p>
+
+      <h2>How this list was compiled</h2>
+      <p>Service names, descriptions and ports come from the <a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml">IANA Service Name and Transport Protocol Port Number Registry</a>. The service-type format (<code>_name._tcp</code>) comes from <a href="https://www.rfc-editor.org/rfc/rfc6763">RFC 6763</a>. Each row links to its registry entry.</p>
+      <p>A row is included only if the registry lists that name with the <code>tcp</code> transport. Names the registry lists without any transport or port (<code>smb</code>, <code>raop</code> and <code>adisk</code>, for example) are left out because the registry does not confirm them as <code>_tcp</code> types. The "What it is" column paraphrases the registry description. The "Typical devices" column is general context and is not registry data. Registry entries change over time, so check the linked entry if a detail matters. This table was last checked against the registry on October 9, 2026.</p>
+
+      <h2>Related</h2>
+      <ul>
+        <li><a href="/guides/list-bonjour-mdns-services/">How to list every Bonjour (mDNS) service on your network</a></li>
+      </ul>
+      <aside class="cta-box">
+        <h2>Check your own network from your iPhone</h2>
+        <p>mDNSShark finds the printers, TVs and services on your Wi-Fi using Bonjour/mDNS (DNS-SD) and SSDP. Scanning is free, and the app is open source and runs on your iPhone.</p>
+        <p><a class="btn" href="https://apps.apple.com/app/mdnsshark/id6741874026">Download on the App Store</a></p>
+      </aside>
+    </article>
+  </main>
+  <footer class="foot">
+    <div class="wrap"><a href="/">Home</a><a href="https://github.com/Shapehaven-Innovations/mDNSShark" rel="noopener">GitHub</a><a href="https://github.com/Shapehaven-Innovations/mDNSShark/issues" rel="noopener">Feedback</a><a href="https://apps.apple.com/app/mdnsshark/id6741874026" rel="noopener">App Store</a><br>&copy; ShapeHaven Innovations LLC &middot; MIT licensed &middot; <a href="https://shapehaveninnovations.com/">A Shapehaven Innovations product</a></div>
+  </footer>
+</body>
+</html>
