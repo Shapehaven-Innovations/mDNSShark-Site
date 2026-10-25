@@ -321,7 +321,7 @@
         <div class="card">
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/><path d="M2 9a14 14 0 0 1 20 0"/></svg></div>
           <h3>Device Discovery</h3>
-          <p>Bonjour/mDNS (DNS-SD) and SSDP find AirPlay receivers, printers, file shares, smart TVs and gateways. Optional /24 scans catch quiet services, and OUI lookups name the manufacturer.</p>
+          <p>Bonjour/mDNS (DNS-SD) and SSDP find AirPlay receivers, printers, file shares, smart TVs and gateways. /24 scans catch quiet services, and OUI lookups name the manufacturer.</p>
         </div>
         <div class="card">
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M12 8v5M12 16v.5"/></svg></div>
@@ -331,7 +331,7 @@
         <div class="card">
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></div>
           <h3>Packet Capture</h3>
-          <p>See DNS and SNI as they happen, with a local packet tunnel and no remote server. Export to pcap and open it in Wireshark.</p>
+          <p>See DNS lookups, IP addresses, and ports as they happen, with a local packet tunnel and no remote server. Export to pcap and open it in Wireshark to see SNI.</p>
         </div>
         <div class="card">
           <div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
@@ -346,7 +346,7 @@
   <section id="privacy">
     <div class="wrap">
       <h2>Your network stays yours</h2>
-      <p class="lede">Scans and analysis run on your phone. Your device list and scan results are never uploaded. The only permission the app needs is local network access.</p>
+      <p class="lede">Scans and analysis run on your phone. Your device list and scan results are never uploaded; only vendor names are sent to the NVD when you tap Refresh CISA Data. Discovery needs only local network access; Packet Capture also asks you to allow a VPN configuration.</p>
       <div class="pills">
         <span class="pill"><b>0</b> telemetry</span>
         <span class="pill"><b>0</b> analytics</span>

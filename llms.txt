@@ -4,9 +4,9 @@
 
 ## Features
 
-- Device discovery: Bonjour/mDNS (DNS-SD) and SSDP, optional /24 subnet scan for services that don't broadcast, and OUI lookups that name the manufacturer.
+- Device discovery: Bonjour/mDNS (DNS-SD) and SSDP, /24 subnet scan for services that don't broadcast, and OUI lookups that name the manufacturer.
 - Security assessment: flags risky exposed services and checks manufacturers against CISA's Known Exploited Vulnerabilities (KEV) catalog and the NVD. Findings export as a plain-text report.
-- Packet capture: DNS and SNI visibility through a local packet tunnel, with pcap export for Wireshark.
+- Packet capture: DNS, IP address, and port visibility through a local packet tunnel, with pcap export for Wireshark (SNI is visible in the exported pcap).
 - TLS Inspection (optional subscription, $1.99/month, 3-day free trial): a local HTTPS proxy that decrypts and logs HTTPS traffic for analysis, with the user's consent.
 
 ## Links
