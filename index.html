@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="mDNSShark is an open-source iPhone app that shows what is on your network: mDNS, DNS-SD and SSDP discovery, security assessment and packet capture. All on-device, no telemetry.">
+  <meta name="description" content="mDNSShark is an open-source iPhone app that shows what is on your network: mDNS, DNS-SD, SSDP and Bluetooth LE discovery, security assessment and packet capture. All on-device, no telemetry.">
   <meta property="og:title" content="mDNSShark: See everything on your network">
-  <meta property="og:description" content="Open-source network discovery, security assessment and packet capture for iPhone. Runs on your phone. No telemetry.">
+  <meta property="og:description" content="Open-source mDNS, SSDP and Bluetooth LE discovery, security assessment and packet capture for iPhone. Runs on your phone. No telemetry.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="mDNSShark">
+  <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://mdnsshark.shapehaveninnovations.com/">
   <meta property="og:image" content="https://mdnsshark.shapehaveninnovations.com/assets/og.png">
   <meta property="og:image:width" content="1200">
@@ -15,13 +17,17 @@
   <meta property="og:image:alt" content="mDNSShark: See everything on your network, with a shark fin over a glowing network graph">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="mDNSShark: See everything on your network">
-  <meta name="twitter:description" content="Open-source network discovery, security assessment and packet capture for iPhone. Runs on your phone. No telemetry.">
+  <meta name="twitter:description" content="Open-source mDNS, SSDP and Bluetooth LE discovery, security assessment and packet capture for iPhone. Runs on your phone. No telemetry.">
   <meta name="twitter:image" content="https://mdnsshark.shapehaveninnovations.com/assets/og.png">
-  <meta name="theme-color" content="#06121f">
+  <meta name="theme-color" content="#04181d">
   <meta name="apple-itunes-app" content="app-id=6741874026">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="author" content="ShapeHaven Innovations LLC">
   <link rel="canonical" href="https://mdnsshark.shapehaveninnovations.com/">
-  <link rel="icon" type="image/png" href="assets/icon-rounded.png">
-  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="256x256" href="/assets/icon-rounded.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -36,7 +42,63 @@
     "image": "https://mdnsshark.shapehaveninnovations.com/assets/icon.png",
     "sameAs": ["https://github.com/Shapehaven-Innovations/mDNSShark"],
     "author": { "@type": "Organization", "name": "ShapeHaven Innovations LLC" },
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "isAccessibleForFree": true,
+    "screenshot": [
+      "https://mdnsshark.shapehaveninnovations.com/assets/screen1.webp",
+      "https://mdnsshark.shapehaveninnovations.com/assets/screen2.webp",
+      "https://mdnsshark.shapehaveninnovations.com/assets/screen3.webp"
+    ],
+    "featureList": ["mDNS, DNS-SD and SSDP discovery", "Network topology map", "Security assessment", "Packet capture", "Traffic analysis", "Bluetooth Low Energy (BLE) scanning", "No telemetry"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is mDNSShark?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "mDNSShark is a free, open-source iPhone app that discovers devices and services on your local network using mDNS (Bonjour/DNS-SD) and SSDP, flags security risks, and captures and analyzes traffic, all on-device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is mDNSShark free and open source?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The app is free to download and licensed under Apache 2.0. The source is on GitHub. Optional TLS Inspection is $1.99/month with a 3-day free trial."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does mDNSShark collect data or use trackers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. There is no telemetry, analytics or trackers. Scans and analysis run on your iPhone, and your device list and scan results are never uploaded."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which iPhones does it support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "mDNSShark requires iOS 18.2 or later."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I see every Bonjour service on my network from an iPhone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Open mDNSShark and tap Scan. It queries _services._dns-sd._udp and lists the services your devices advertise, such as AirPlay, printers, file shares and smart TVs."
+        }
+      }
+    ]
   }
   </script>
   <title>mDNSShark: Network Scanner &amp; Packet Capture for iPhone</title>
@@ -44,15 +106,23 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg:       #06121f;
-      --bg-alt:   #0a1c2e;
-      --card:     rgba(34,211,238,0.06);
-      --line:     rgba(34,211,238,0.18);
-      --cyan:     #22d3ee;
-      --cyan-dim: #0e7490;
+      --bg:       #04181d;
+      --bg-alt:   #0b3a46;
+      --card:     #0f4857;
+      --line:     rgba(109,200,211,0.34);
+      --cyan:     #7fd8e3;
+      --cyan-dim: #2f7b86;
       --text:     #e6f4fa;
-      --muted:    rgba(230,244,250,0.62);
+      --muted:    rgba(230,244,250,0.74);
     }
+
+    #faq { background: var(--bg); }
+    #feedback { background: var(--bg-alt); }
+    #download { background: var(--bg); border-top: 1px solid var(--line); }
+    .faq { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+    .faq details { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; }
+    .faq summary { cursor: pointer; font-weight: 700; }
+    .faq p { margin-top: 10px; color: var(--muted); }
 
     html { scroll-behavior: smooth; }
 
@@ -75,18 +145,18 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
       padding: 14px 48px;
-      background: rgba(6,18,31,0.72);
+      background: rgba(4,24,29,0.72);
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--line);
     }
     .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none;
-      color: var(--cyan); font-weight: 800; font-size: 16px; letter-spacing: .3px; }
+      color: #fff; font-weight: 800; font-size: 16px; letter-spacing: .3px; }
     .nav-brand img { width: 28px; height: 28px; border-radius: 7px; }
     .nav-links { display: flex; align-items: center; gap: 28px; }
     .nav-links a { text-decoration: none; font-size: 14px; color: var(--muted); transition: color .2s; }
     .nav-links a:hover { color: var(--text); }
     .nav-links a.btn-nav { color: var(--bg); background: var(--cyan); padding: 8px 18px; border-radius: 999px; font-weight: 700; }
-    .nav-links a.btn-nav:hover { color: var(--bg); background: #67e8f9; }
+    .nav-links a.btn-nav:hover { color: var(--bg); background: #9adce4; }
 
     /* ── Hero ── */
     #hero {
@@ -95,7 +165,7 @@
       display: flex; align-items: center;
       padding: 120px 0 80px;
       background:
-        linear-gradient(90deg, rgba(6,18,31,0.96) 0%, rgba(6,18,31,0.78) 45%, rgba(6,18,31,0.25) 100%),
+        linear-gradient(90deg, rgba(4,24,29,0.96) 0%, rgba(4,24,29,0.78) 45%, rgba(4,24,29,0.25) 100%),
         url('assets/hero.svg') center bottom / cover no-repeat;
     }
     .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
@@ -123,23 +193,23 @@
       position: relative;
       width: 100%; max-width: 300px; margin: 0 auto;
       border-radius: 46px; padding: 12px;
-      background: linear-gradient(145deg, #3a5a75 0%, #17324a 35%, #0a1c2e 70%, #1b3a54 100%);
-      border: 1px solid rgba(147,197,253,.28);
+      background: linear-gradient(145deg, #3f6a72 0%, #12363f 35%, #0a343d 70%, #1a454f 100%);
+      border: 1px solid rgba(140,200,210,.28);
       box-shadow:
         inset 0 0 0 2px #050d16,
         inset 0 2px 3px rgba(255,255,255,.22),
         inset 0 -3px 6px rgba(0,0,0,.6),
-        0 2px 0 #12293d,
-        0 5px 0 #0c1f31,
-        0 8px 0 #081827,
+        0 2px 0 #0f2c33,
+        0 5px 0 #0b2229,
+        0 8px 0 #071a20,
         0 34px 50px -10px rgba(0,0,0,.65),
-        0 0 50px rgba(34,211,238,.14);
+        0 0 50px rgba(109,200,211,.14);
     }
     /* side buttons */
     .phone::before, .phone::after { content: ""; position: absolute; width: 4px; border-radius: 2px;
-      background: linear-gradient(90deg, #0a1c2e, #3a5a75); }
-    .phone::before { left: -4px; top: 18%; height: 7%; box-shadow: 0 52px 0 0 #1b3a54, 0 104px 0 0 #1b3a54; }
-    .phone::after { right: -4px; top: 28%; height: 14%; background: linear-gradient(270deg, #0a1c2e, #3a5a75); }
+      background: linear-gradient(90deg, #0a343d, #3f6a72); }
+    .phone::before { left: -4px; top: 18%; height: 7%; box-shadow: 0 52px 0 0 #1a454f, 0 104px 0 0 #1a454f; }
+    .phone::after { right: -4px; top: 28%; height: 14%; background: linear-gradient(270deg, #0a343d, #3f6a72); }
     .phone img { border-radius: 34px; width: 100%; height: auto; }
 
     /* ── Sections ── */
@@ -150,10 +220,10 @@
 
     #features { background: var(--bg-alt); }
     .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 28px 24px; transition: transform .25s, border-color .25s; }
-    .card:hover { transform: translateY(-4px); border-color: rgba(34,211,238,.45); }
+    .card { box-shadow: 0 6px 18px rgba(0,0,0,.28); background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 28px 24px; transition: transform .25s, border-color .25s; }
+    .card:hover { transform: translateY(-4px); border-color: rgba(109,200,211,.45); }
     .card .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 18px;
-      background: rgba(34,211,238,.12); color: var(--cyan); }
+      background: rgba(127,216,227,.18); color: var(--cyan); }
     .card .ico svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .card h3 { font-size: 20px; margin-bottom: 10px; }
     .card p { font-size: 15px; color: var(--muted); }
@@ -170,7 +240,7 @@
     .screens img.on { opacity: 1; }
     .chip {
       position: absolute; display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(10,28,46,.85); border: 1px solid var(--line); border-radius: 999px;
+      background: rgba(11,58,70,.92); border: 1px solid var(--line); border-radius: 999px;
       padding: 8px 14px; font-size: 13px; font-weight: 700; white-space: nowrap;
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       box-shadow: 0 10px 30px rgba(0,0,0,.4);
@@ -205,7 +275,7 @@
     }
 
     /* ── Privacy ── */
-    #privacy { background: var(--bg-alt); text-align: center; }
+    #privacy { background: var(--bg); text-align: center; }
     #privacy h2 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 16px; }
     #privacy .lede { margin: 0 auto 36px; }
     .pills { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 32px; }
@@ -242,7 +312,7 @@
       #nav { padding: 12px 16px; }
       .nav-links a:not(.btn-nav) { display: none; }
       #hero { padding-top: 96px; background:
-        linear-gradient(180deg, rgba(6,18,31,0.92) 0%, rgba(6,18,31,0.7) 60%, rgba(6,18,31,0.4) 100%),
+        linear-gradient(180deg, rgba(4,24,29,0.92) 0%, rgba(4,24,29,0.7) 60%, rgba(4,24,29,0.4) 100%),
         url('assets/hero.svg') center bottom / cover no-repeat; }
       .hero-grid { grid-template-columns: 1fr; text-align: center; }
       .lede { margin-left: auto; margin-right: auto; }
@@ -454,12 +524,12 @@
 }
 
 :root {
-  --sf-page-bg: #173d55;
-  --sf-page-line: #336a86;
+  --sf-page-bg: #0b3540;
+  --sf-page-line: #2f7b86;
   --sf-page-muted: #a9c8d6;
   --sf-page-text: #f2fbfe;
   --sf-page-soft: #cfe6f0;
-  --sf-page-accent: #22d3ee;
+  --sf-page-accent: #6dc8d3;
 }
   </style>
   <!-- footer-css:end -->
@@ -495,12 +565,12 @@
       <div class="stage" id="stage">
         <div class="phone" id="phone">
           <div class="screens" id="screens-panel" role="tabpanel" aria-labelledby="tab-0">
-            <img class="on" fetchpriority="high" data-tab="0" src="assets/screen1.webp" width="600" height="1300" alt="Network topology">
-            <img aria-hidden="true" decoding="async" data-tab="1" src="assets/screen2.webp" width="600" height="1300" alt="Discovered devices list">
-            <img aria-hidden="true" decoding="async" data-tab="2" src="assets/screen3.webp" width="600" height="1300" alt="Security overview">
-            <img aria-hidden="true" decoding="async" data-tab="3" src="assets/screen5.webp" width="600" height="1300" alt="Packet capture">
-            <img aria-hidden="true" decoding="async" data-tab="4" src="assets/screen6.webp" width="600" height="1300" alt="Traffic analysis">
-            <img aria-hidden="true" decoding="async" data-tab="5" src="assets/screen7.webp" width="600" height="1300" alt="Settings">
+            <img class="on" fetchpriority="high" data-tab="0" src="assets/screen1.webp" width="600" height="1300" alt="mDNSShark network topology map showing discovered devices on a local network">
+            <img aria-hidden="true" decoding="async" data-tab="1" src="assets/screen2.webp" width="600" height="1300" alt="mDNSShark device list with manufacturer, OS and open ports">
+            <img aria-hidden="true" decoding="async" data-tab="2" src="assets/screen3.webp" width="600" height="1300" alt="mDNSShark security overview listing exposed Telnet, FTP and SSH services">
+            <img aria-hidden="true" decoding="async" data-tab="3" src="assets/screen5.webp" width="600" height="1300" alt="mDNSShark live packet capture with TCP, UDP, DNS and mDNS filters">
+            <img aria-hidden="true" decoding="async" data-tab="4" src="assets/screen6.webp" width="600" height="1300" alt="mDNSShark traffic analysis with protocol distribution">
+            <img aria-hidden="true" decoding="async" data-tab="5" src="assets/screen8.webp" width="600" height="1300" alt="mDNSShark Bluetooth scan of nearby devices">
           </div>
         </div>
         <span class="chip c1"><i style="background:#9ca3af"></i>48 devices</span>
@@ -512,7 +582,7 @@
           <button id="tab-2" data-tab="2" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Security</button>
           <button id="tab-3" data-tab="3" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Packets</button>
           <button id="tab-4" data-tab="4" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Analysis</button>
-          <button id="tab-5" data-tab="5" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Settings</button>
+          <button id="tab-5" data-tab="5" role="tab" aria-selected="false" aria-controls="screens-panel" tabindex="-1">Bluetooth</button>
         </div>
         <button class="pause" id="pause" type="button" aria-label="Pause screen auto-play">Pause</button>
       </div>
@@ -525,7 +595,7 @@
         <h2>Know what is on your Wi-Fi</h2>
         <p>Discovery, assessment and capture in one app, with no setup.</p>
       </div>
-      <div class="grid">
+      <div class="grid g3">
         <div class="card">
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/><path d="M2 9a14 14 0 0 1 20 0"/></svg></div>
           <h3>Device Discovery</h3>
@@ -540,6 +610,11 @@
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></div>
           <h3>Packet Capture</h3>
           <p>See DNS lookups, IP addresses, and ports as they happen, with a local packet tunnel and no remote server. Export to pcap and open it in Wireshark to see SNI.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M7 7l10 10-5 4V3l5 4L7 17"/></svg></div>
+          <h3>Bluetooth LE Scanning</h3>
+          <p>Lists nearby Bluetooth Low Energy devices from their advertisements and guesses their type from public Bluetooth SIG, Matter, Fast Pair and Apple Continuity tables. Filter Devices by All, LAN or Bluetooth.</p>
         </div>
         <div class="card">
           <div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
@@ -588,11 +663,24 @@
         <a class="card action" href="https://github.com/Shapehaven-Innovations/mDNSShark" target="_blank" rel="noopener">
           <div class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3-11 6.5"/></svg></div>
           <h3>Contribute code</h3>
-          <p>The whole app is MIT licensed. Read the source, star the repo, fork it, and send a pull request.</p>
+          <p>The whole app is Apache 2.0 licensed. Read the source, star the repo, fork it, and send a pull request.</p>
           <span class="go">View on GitHub →</span>
         </a>
       </div>
       <p class="fine">Prefer to browse first? See <a href="https://github.com/Shapehaven-Innovations/mDNSShark/issues" target="_blank" rel="noopener">open issues</a>. A free GitHub account is needed to post.</p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head"><h2>Frequently asked questions</h2></div>
+      <div class="faq">
+        <details><summary>What is mDNSShark?</summary><p>mDNSShark is a free, open-source iPhone app that discovers devices and services on your local network using mDNS (Bonjour/DNS-SD) and SSDP, flags security risks, and captures and analyzes traffic, all on-device.</p></details>
+        <details><summary>Is mDNSShark free and open source?</summary><p>Yes. The app is free to download and licensed under Apache 2.0. The source is on GitHub. Optional TLS Inspection is $1.99/month with a 3-day free trial.</p></details>
+        <details><summary>Does mDNSShark collect data or use trackers?</summary><p>No. There is no telemetry, analytics or trackers. Scans and analysis run on your iPhone, and your device list and scan results are never uploaded.</p></details>
+        <details><summary>Which iPhones does it support?</summary><p>mDNSShark requires iOS 18.2 or later.</p></details>
+        <details><summary>How do I see every Bonjour service on my network from an iPhone?</summary><p>Open mDNSShark and tap Scan. It queries _services._dns-sd._udp and lists the services your devices advertise, such as AirPlay, printers, file shares and smart TVs.</p></details>
+      </div>
     </div>
   </section>
 
@@ -670,7 +758,7 @@
             <li><a href="https://shapehaveninnovations.com/privacy.html">Privacy Policy</a></li>
             <li><a class="site-footer__icon" href="https://github.com/Shapehaven-Innovations" target="_blank" rel="noopener" aria-label="ShapeHaven Innovations on GitHub (opens in a new tab)"><svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
           </ul>
-          <p class="site-footer__fine">MIT licensed. A <a href="https://shapehaveninnovations.com/">ShapeHaven Innovations</a> product</p>
+          <p class="site-footer__fine">Apache 2.0 licensed. A <a href="https://shapehaveninnovations.com/">ShapeHaven Innovations</a> product</p>
         </div>
       </div>
     </footer>

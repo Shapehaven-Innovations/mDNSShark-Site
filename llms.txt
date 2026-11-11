@@ -1,10 +1,11 @@
 # mDNSShark
 
-> mDNSShark is a free, open-source iPhone app (iOS 18.2+) that shows what is on your local network. It uses mDNS (Bonjour/DNS-SD) and SSDP to discover printers, media servers, smart TVs, IoT gadgets and other services on your Wi-Fi, flags risky exposed services, and captures network traffic. Scans and analysis run on the phone, and the app has no telemetry, analytics or trackers. Developer: ShapeHaven Innovations LLC. License: MIT.
+> mDNSShark is a free, open-source iPhone app (iOS 18.2+) that shows what is on your local network. It uses mDNS (Bonjour/DNS-SD) and SSDP to discover printers, media servers, smart TVs, IoT gadgets and other services on your Wi-Fi, flags risky exposed services, and captures network traffic. Scans and analysis run on the phone, and the app has no telemetry, analytics or trackers. Developer: ShapeHaven Innovations LLC. License: Apache 2.0.
 
 ## Features
 
 - Device discovery: Bonjour/mDNS (DNS-SD) and SSDP, /24 subnet scan for services that don't broadcast, and OUI lookups that name the manufacturer.
+- Bluetooth LE scanning: lists nearby Bluetooth Low Energy devices from their advertisements and guesses their type from public Bluetooth SIG, Matter, Eddystone, Fast Pair, Swift Pair and Apple Continuity tables. Filter Devices by All, LAN or Bluetooth. Bluetooth devices are not matched to Wi-Fi devices.
 - Security assessment: flags risky exposed services and checks manufacturers against CISA's Known Exploited Vulnerabilities (KEV) catalog and the NVD. Findings export as a plain-text report.
 - Packet capture: DNS, IP address, and port visibility through a local packet tunnel, with pcap export for Wireshark (SNI is visible in the exported pcap).
 - TLS Inspection (optional subscription, $1.99/month, 3-day free trial): a local HTTPS proxy that decrypts and logs HTTPS traffic for analysis, with the user's consent.
